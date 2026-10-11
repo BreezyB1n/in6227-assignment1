@@ -3,8 +3,8 @@
   "title": "Logistic Regression vs.\\ Gradient Boosting on an Anonymised Tabular Dataset",
   "course_line": "IN6227-Assignment-1",
   "variant": "Variant-2",
-  "name": "<FULL NAME>",
-  "matric": "<MATRIC NO>",
+  "name": "Bai Jinfan",
+  "matric": "G2610888C",
   "llm_model": "Claude Opus 5.5 (claude-opus-5-5)",
   "llm_interface": "Agent harness - Claude Code 2.1.278 (desktop app)",
   "repo_url": "https://github.com/BreezyB1n/in6227-assignment1"

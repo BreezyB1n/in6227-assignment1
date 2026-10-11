@@ -1,0 +1,673 @@
+{
+  "load": {
+    "train_file": "train.csv",
+    "test_file": "test.csv",
+    "target": "label",
+    "raw_train_rows": 31112,
+    "whitespace_cells_stripped": 46,
+    "raw_test_rows": 13334,
+    "label_spelling_fixes": {},
+    "test_source": "provided",
+    "train_rows_missing_label": 3,
+    "test_rows_missing_label": 1,
+    "train_rows": 31109,
+    "test_rows": 13333
+  },
+  "task": "binary",
+  "target": "label",
+  "n_train": 31109,
+  "n_test": 13333,
+  "n_features": 15,
+  "numeric_columns": [
+    "aptitude_score",
+    "performance_score",
+    "stability_index",
+    "load_ratio",
+    "index_weight",
+    "activity_duration",
+    "composite_rank"
+  ],
+  "categorical_columns": [
+    "geological_era",
+    "weather_pattern",
+    "region",
+    "personal_interest",
+    "brew_preference",
+    "instrument",
+    "species",
+    "mineral_type"
+  ],
+  "target_train": {
+    "no": 23645,
+    "yes": 7464
+  },
+  "target_test": {
+    "no": 10165,
+    "yes": 3168
+  },
+  "minority_share": 0.2399,
+  "imbalance_ratio": 3.17,
+  "onehot_width_estimate": 82,
+  "numeric": {
+    "aptitude_score": {
+      "missing_train": 4,
+      "n_unique": 15147,
+      "mean": 342.1318,
+      "std": 68.9262,
+      "min": 90.0,
+      "q1": 310.59,
+      "median": 333.51,
+      "q3": 402.56,
+      "max": 510.0,
+      "skew": -0.292,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0198,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "missing_test": 1,
+      "drift_ks": 0.007,
+      "drift_ks_p": 0.6684
+    },
+    "performance_score": {
+      "missing_train": 2,
+      "n_unique": 24418,
+      "mean": 296.4977,
+      "std": 187.6276,
+      "min": 0.0,
+      "q1": 146.57,
+      "median": 275.39,
+      "q3": 420.175,
+      "max": 1010.0,
+      "skew": 0.552,
+      "zeros": 265,
+      "zero_share": 0.0085,
+      "outlier_share_1.5iqr": 0.005,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "zero_isolated": false,
+      "min_nonzero": 0.09,
+      "missing_test": 0,
+      "drift_ks": 0.008,
+      "drift_ks_p": 0.617
+    },
+    "stability_index": {
+      "missing_train": 2,
+      "n_unique": 3788,
+      "mean": 3.1564,
+      "std": 0.8493,
+      "min": 0.0,
+      "q1": 2.751,
+      "median": 3.351,
+      "q3": 3.762,
+      "max": 4.625,
+      "skew": -1.229,
+      "zeros": 265,
+      "zero_share": 0.0085,
+      "outlier_share_1.5iqr": 0.0363,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "zero_isolated": true,
+      "min_nonzero": 0.009,
+      "missing_test": 1,
+      "drift_ks": 0.008,
+      "drift_ks_p": 0.6147
+    },
+    "load_ratio": {
+      "missing_train": 2,
+      "n_unique": 18798,
+      "mean": 24.4233,
+      "std": 9.92,
+      "min": 0.0,
+      "q1": 19.272,
+      "median": 23.689,
+      "q3": 27.657,
+      "max": 143.717,
+      "skew": 1.705,
+      "zeros": 38,
+      "zero_share": 0.0012,
+      "outlier_share_1.5iqr": 0.0812,
+      "outlier_share_3iqr": 0.0179,
+      "integer_valued": false,
+      "zero_isolated": true,
+      "min_nonzero": 0.081,
+      "missing_test": 1,
+      "drift_ks": 0.009,
+      "drift_ks_p": 0.4729
+    },
+    "index_weight": {
+      "missing_train": 3,
+      "n_unique": 3595,
+      "mean": 12.7216,
+      "std": 7.7472,
+      "min": 0.0,
+      "q1": 7.52,
+      "median": 11.73,
+      "q3": 16.23,
+      "max": 99.62,
+      "skew": 1.511,
+      "zeros": 4,
+      "zero_share": 0.0001,
+      "outlier_share_1.5iqr": 0.0327,
+      "outlier_share_3iqr": 0.0052,
+      "integer_valued": false,
+      "zero_isolated": false,
+      "min_nonzero": 0.05,
+      "missing_test": 1,
+      "drift_ks": 0.007,
+      "drift_ks_p": 0.7771
+    },
+    "activity_duration": {
+      "missing_train": 2,
+      "n_unique": 9657,
+      "mean": 80.3625,
+      "std": 25.5142,
+      "min": 0.0,
+      "q1": 72.74,
+      "median": 80.33,
+      "q3": 90.26,
+      "max": 205.0,
+      "skew": 0.199,
+      "zeros": 38,
+      "zero_share": 0.0012,
+      "outlier_share_1.5iqr": 0.1719,
+      "outlier_share_3iqr": 0.038,
+      "integer_valued": false,
+      "zero_isolated": true,
+      "min_nonzero": 0.35,
+      "missing_test": 1,
+      "drift_ks": 0.008,
+      "drift_ks_p": 0.5332
+    },
+    "composite_rank": {
+      "missing_train": 1,
+      "n_unique": 4213,
+      "mean": 3.2388,
+      "std": 0.8698,
+      "min": 0.589,
+      "q1": 2.591,
+      "median": 3.199,
+      "q3": 3.838,
+      "max": 6.876,
+      "skew": 0.258,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0037,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "missing_test": 4,
+      "drift_ks": 0.006,
+      "drift_ks_p": 0.9032
+    }
+  },
+  "categorical": {
+    "geological_era": {
+      "missing_train": 2,
+      "n_levels": 5,
+      "top_levels": {
+        "Triassic": 26641,
+        "Jurassic": 2933,
+        "Devonian": 983,
+        "Cambrian": 298,
+        "Permian": 252
+      },
+      "dominant_share": 0.8564,
+      "rare_levels": 2,
+      "rare_share_total": 0.0177,
+      "placeholder_levels": [],
+      "unseen_test_levels": [],
+      "unseen_test_rows": 0,
+      "missing_test": 2,
+      "drift_tvd": 0.004,
+      "positive_rate_by_level": {
+        "Triassic": 0.255,
+        "Jurassic": 0.12,
+        "Devonian": 0.251,
+        "Cambrian": 0.107,
+        "Permian": 0.123
+      }
+    },
+    "weather_pattern": {
+      "missing_train": 3,
+      "n_levels": 7,
+      "top_levels": {
+        "Monsoon": 14273,
+        "Heatwave": 10249,
+        "Blizzard": 4191,
+        "Fog": 987,
+        "Frost": 978,
+        "Drizzle": 404
+      },
+      "dominant_share": 0.4589,
+      "rare_levels": 1,
+      "rare_share_total": 0.0008,
+      "placeholder_levels": [],
+      "unseen_test_levels": [],
+      "unseen_test_rows": 0,
+      "missing_test": 0,
+      "drift_tvd": 0.003,
+      "positive_rate_by_level": {
+        "Monsoon": 0.447,
+        "Heatwave": 0.044,
+        "Blizzard": 0.104,
+        "Fog": 0.064,
+        "Frost": 0.082,
+        "Drizzle": 0.106,
+        "Typhoon": 0.375
+      }
+    },
+    "region": {
+      "missing_train": 4,
+      "n_levels": 21,
+      "top_levels": {
+        "Texas": 27914,
+        "Arizona": 608,
+        "Wyoming": 553,
+        "Other": 531,
+        "South-Dakota": 178,
+        "Oregon": 131
+      },
+      "dominant_share": 0.8974,
+      "rare_levels": 17,
+      "rare_share_total": 0.0482,
+      "placeholder_levels": [
+        "Other"
+      ],
+      "unseen_test_levels": [],
+      "unseen_test_rows": 0,
+      "missing_test": 1,
+      "drift_tvd": 0.006,
+      "positive_rate_by_level": {
+        "Texas": 0.245,
+        "Arizona": 0.058,
+        "Wyoming": 0.248,
+        "Other": 0.202,
+        "South-Dakota": 0.219,
+        "Oregon": 0.29,
+        "Vermont": 0.383,
+        "Kentucky": 0.114
+      }
+    },
+    "personal_interest": {
+      "missing_train": 6,
+      "n_levels": 11,
+      "top_levels": {
+        "Astronomy": 3964,
+        "Beekeeping": 3954,
+        "Falconry": 3877,
+        "Archery": 3559,
+        "Calligraphy": 3443,
+        "Kite-flying": 3153
+      },
+      "dominant_share": 0.1274,
+      "rare_levels": 0,
+      "rare_share_total": 0.0,
+      "placeholder_levels": [
+        "Other",
+        "Unknown"
+      ],
+      "unseen_test_levels": [],
+      "unseen_test_rows": 0,
+      "missing_test": 1,
+      "drift_tvd": 0.014,
+      "positive_rate_by_level": {
+        "Astronomy": 0.454,
+        "Beekeeping": 0.228,
+        "Falconry": 0.483,
+        "Archery": 0.138,
+        "Calligraphy": 0.266,
+        "Kite-flying": 0.043,
+        "Other": 0.218,
+        "Glassblowing": 0.119
+      }
+    },
+    "brew_preference": {
+      "missing_train": 7,
+      "n_levels": 2,
+      "top_levels": {
+        "Espresso": 20775,
+        "Latte": 10327
+      },
+      "dominant_share": 0.668,
+      "rare_levels": 0,
+      "rare_share_total": 0.0,
+      "placeholder_levels": [],
+      "unseen_test_levels": [],
+      "unseen_test_rows": 0,
+      "missing_test": 3,
+      "drift_tvd": 0.005,
+      "positive_rate_by_level": {
+        "Espresso": 0.305,
+        "Latte": 0.11
+      }
+    },
+    "instrument": {
+      "missing_train": 3,
+      "n_levels": 6,
+      "top_levels": {
+        "Cello": 12572,
+        "Oboe": 8064,
+        "Dulcimer": 4779,
+        "Theremin": 3236,
+        "Zither": 1491,
+        "Sitar": 964
+      },
+      "dominant_share": 0.4042,
+      "rare_levels": 0,
+      "rare_share_total": 0.0,
+      "placeholder_levels": [],
+      "unseen_test_levels": [],
+      "unseen_test_rows": 0,
+      "missing_test": 2,
+      "drift_tvd": 0.005,
+      "positive_rate_by_level": {
+        "Cello": 0.45,
+        "Oboe": 0.1,
+        "Dulcimer": 0.013,
+        "Theremin": 0.063,
+        "Zither": 0.475,
+        "Sitar": 0.035
+      }
+    },
+    "species": {
+      "missing_train": 3,
+      "n_levels": 7,
+      "top_levels": {
+        "Lynx": 21720,
+        "Heron": 2449,
+        "Orca": 1948,
+        "Unknown": 1760,
+        "Viper": 1230,
+        "Bison": 1080
+      },
+      "dominant_share": 0.6983,
+      "rare_levels": 0,
+      "rare_share_total": 0.0,
+      "placeholder_levels": [
+        "Unknown",
+        "Other"
+      ],
+      "unseen_test_levels": [],
+      "unseen_test_rows": 0,
+      "missing_test": 2,
+      "drift_tvd": 0.01,
+      "positive_rate_by_level": {
+        "Lynx": 0.218,
+        "Heron": 0.282,
+        "Orca": 0.294,
+        "Unknown": 0.087,
+        "Viper": 0.28,
+        "Bison": 0.563,
+        "Other": 0.395
+      }
+    },
+    "mineral_type": {
+      "missing_train": 3,
+      "n_levels": 16,
+      "top_levels": {
+        "Marble": 10076,
+        "Opal": 6892,
+        "Sapphire": 5121,
+        "Ruby": 1668,
+        "Granite": 1311,
+        "Onyx": 1156
+      },
+      "dominant_share": 0.3239,
+      "rare_levels": 2,
+      "rare_share_total": 0.0065,
+      "placeholder_levels": [],
+      "unseen_test_levels": [],
+      "unseen_test_rows": 0,
+      "missing_test": 0,
+      "drift_tvd": 0.014,
+      "positive_rate_by_level": {
+        "Marble": 0.161,
+        "Opal": 0.193,
+        "Sapphire": 0.414,
+        "Ruby": 0.534,
+        "Granite": 0.249,
+        "Onyx": 0.05,
+        "Quartz": 0.246,
+        "Obsidian": 0.065
+      }
+    }
+  },
+  "missing": {
+    "rows_with_any_missing_train": 47,
+    "rows_with_any_missing_test": 20,
+    "cells_missing_train": 47
+  },
+  "duplicates": {
+    "full_rows": 0,
+    "feature_dups_with_conflicting_label": 0,
+    "test_rows_also_in_train": 0
+  },
+  "high_corr_pairs": [
+    {
+      "a": "performance_score",
+      "b": "stability_index",
+      "r": 0.891
+    },
+    {
+      "a": "performance_score",
+      "b": "composite_rank",
+      "r": 0.88
+    },
+    {
+      "a": "stability_index",
+      "b": "composite_rank",
+      "r": 0.83
+    }
+  ],
+  "linear_redundancy": {
+    "aptitude_score": {
+      "r2": 1.0,
+      "formula": "-0.6667*performance_score + 166.7*composite_rank",
+      "formula_intercept": -0.00211,
+      "formula_r2": 0.9999995
+    },
+    "performance_score": {
+      "r2": 1.0,
+      "formula": "-1.5*aptitude_score + 250*composite_rank",
+      "formula_intercept": -0.00338,
+      "formula_r2": 0.9999999
+    },
+    "stability_index": {
+      "r2": 0.8296
+    },
+    "load_ratio": {
+      "r2": 0.89022
+    },
+    "index_weight": {
+      "r2": 0.00756
+    },
+    "activity_duration": {
+      "r2": 0.85401
+    },
+    "composite_rank": {
+      "r2": 1.0,
+      "formula": "0.006*aptitude_score + 0.004*performance_score",
+      "formula_intercept": 1e-05,
+      "formula_r2": 0.9999999
+    }
+  },
+  "zero_blocks": [
+    {
+      "columns": [
+        "performance_score",
+        "stability_index"
+      ],
+      "rows": 265,
+      "target_dist_in_block": {
+        "no": 1.0
+      }
+    },
+    {
+      "columns": [
+        "load_ratio",
+        "activity_duration"
+      ],
+      "rows": 38,
+      "target_dist_in_block": {
+        "no": 0.842,
+        "yes": 0.158
+      }
+    }
+  ],
+  "single_feature_auc": {
+    "instrument": 0.779,
+    "weather_pattern": 0.77,
+    "composite_rank": 0.746,
+    "personal_interest": 0.722,
+    "aptitude_score": 0.709,
+    "mineral_type": 0.704,
+    "performance_score": 0.703,
+    "stability_index": 0.703,
+    "activity_duration": 0.664,
+    "brew_preference": 0.616,
+    "load_ratio": 0.585,
+    "species": 0.585,
+    "geological_era": 0.535,
+    "region": 0.517,
+    "index_weight": 0.517
+  },
+  "flags": [
+    {
+      "kind": "missing_label",
+      "column": "label",
+      "evidence": "3 train / 1 test rows dropped (cannot be imputed)"
+    },
+    {
+      "kind": "class_imbalance",
+      "column": "label",
+      "evidence": "minority share 0.2399, ratio 3.17:1"
+    },
+    {
+      "kind": "missing_values",
+      "column": [
+        "aptitude_score",
+        "performance_score",
+        "stability_index",
+        "load_ratio",
+        "index_weight",
+        "activity_duration",
+        "composite_rank",
+        "geological_era",
+        "weather_pattern",
+        "region",
+        "personal_interest",
+        "brew_preference",
+        "instrument",
+        "species",
+        "mineral_type"
+      ],
+      "evidence": "train/test missing counts {'aptitude_score': '4/1', 'performance_score': '2/0', 'stability_index': '2/1', 'load_ratio': '2/1', 'index_weight': '3/1', 'activity_duration': '2/1', 'composite_rank': '1/4', 'geological_era': '2/2', 'weather_pattern': '3/0', 'region': '4/1', 'personal_interest': '6/1', 'brew_preference': '7/3', 'instrument': '3/2', 'species': '3/2', 'mineral_type': '3/0'}; worst column 0.02% of rows; rows with any missing: train 47"
+    },
+    {
+      "kind": "isolated_zeros",
+      "column": "stability_index",
+      "evidence": "265 zeros (0.85%) far below the non-zero bulk"
+    },
+    {
+      "kind": "isolated_zeros",
+      "column": "load_ratio",
+      "evidence": "38 zeros (0.12%) far below the non-zero bulk"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "load_ratio",
+      "evidence": "skew 1.705, 1.79% beyond 3*IQR, max 143.717"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "index_weight",
+      "evidence": "skew 1.511, 0.52% beyond 3*IQR, max 99.62"
+    },
+    {
+      "kind": "isolated_zeros",
+      "column": "activity_duration",
+      "evidence": "38 zeros (0.12%) far below the non-zero bulk"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "activity_duration",
+      "evidence": "skew 0.199, 3.80% beyond 3*IQR, max 205.0"
+    },
+    {
+      "kind": "co_occurring_zeros",
+      "column": [
+        "performance_score",
+        "stability_index"
+      ],
+      "evidence": "265 rows zero in all; target distribution there {'no': 1.0}"
+    },
+    {
+      "kind": "co_occurring_zeros",
+      "column": [
+        "load_ratio",
+        "activity_duration"
+      ],
+      "evidence": "38 rows zero in all; target distribution there {'no': 0.842, 'yes': 0.158}"
+    },
+    {
+      "kind": "rare_levels",
+      "column": "geological_era",
+      "evidence": "2 levels <1% each, 1.77% of rows in total"
+    },
+    {
+      "kind": "rare_levels",
+      "column": "weather_pattern",
+      "evidence": "1 levels <1% each, 0.08% of rows in total"
+    },
+    {
+      "kind": "rare_levels",
+      "column": "region",
+      "evidence": "17 levels <1% each, 4.82% of rows in total"
+    },
+    {
+      "kind": "placeholder_levels",
+      "column": "region",
+      "evidence": "explicit placeholder values ['Other']"
+    },
+    {
+      "kind": "placeholder_levels",
+      "column": "personal_interest",
+      "evidence": "explicit placeholder values ['Other', 'Unknown']"
+    },
+    {
+      "kind": "placeholder_levels",
+      "column": "species",
+      "evidence": "explicit placeholder values ['Unknown', 'Other']"
+    },
+    {
+      "kind": "rare_levels",
+      "column": "mineral_type",
+      "evidence": "2 levels <1% each, 0.65% of rows in total"
+    },
+    {
+      "kind": "exact_linear_dependency",
+      "column": "aptitude_score",
+      "evidence": "aptitude_score = -0.6667*performance_score + 166.7*composite_rank + -0.00211 (R^2=0.9999995)"
+    },
+    {
+      "kind": "exact_linear_dependency",
+      "column": "performance_score",
+      "evidence": "performance_score = -1.5*aptitude_score + 250*composite_rank + -0.00338 (R^2=0.9999999)"
+    },
+    {
+      "kind": "exact_linear_dependency",
+      "column": "composite_rank",
+      "evidence": "composite_rank = 0.006*aptitude_score + 0.004*performance_score + 1e-05 (R^2=0.9999999)"
+    },
+    {
+      "kind": "high_correlation",
+      "column": [
+        "composite_rank",
+        "performance_score",
+        "stability_index"
+      ],
+      "evidence": "3 pairs with |r| >= 0.8; strongest: performance_score~stability_index r=0.891, performance_score~composite_rank r=0.88, stability_index~composite_rank r=0.83"
+    }
+  ],
+  "n_flags": 22
+}

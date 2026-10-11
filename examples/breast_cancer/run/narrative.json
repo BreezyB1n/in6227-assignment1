@@ -1,0 +1,46 @@
+{
+ "meta": {
+  "course_line": "Generalisation example",
+  "variant": "Variant-2",
+  "name": "<FULL NAME>",
+  "matric": "<MATRIC NO>",
+  "llm_model": "Claude Opus 5.5 (claude-opus-5-5)",
+  "llm_interface": "Agent harness - Claude Code 2.1.278 (desktop app)",
+  "repo_url": "https://github.com/BreezyB1n/in6227-assignment1",
+  "title": "Generalisation example 1: Wisconsin breast cancer (numeric, binary, no test file)"
+ },
+ "abstract": "\\textbf{Summary.} Same skill and code as the main report, a very different dataset: [[P/n_features|int]] numeric cell-morphology features, no categorical columns, no missing values and no supplied test file (a stratified 20\\% hold-out is created). LR and Random Forest are statistically indistinguishable on the test set (ROC-AUC difference [[R/comparison/bootstrap_diff_B_minus_A/roc_auc/mean|+3]], 95\\% CI [[R/comparison/bootstrap_diff_B_minus_A/roc_auc/ci/0|+3]] to [[R/comparison/bootstrap_diff_B_minus_A/roc_auc/ci/1|+3]]).",
+ "issues_table": [
+  [
+   "No test file",
+   "[[P/load/test_source|raw]]",
+   "Hold-out created once with a fixed seed and used once."
+  ],
+  [
+   "Heavy tails",
+   "7 \\emph{error} columns with skew $\\ge$ 2 (max skew [[P/numeric/area error/skew|2]])",
+   "LR: \\texttt{log1p} (values are non-negative); RF: none (rank-based splits)."
+  ],
+  [
+   "Co-occurring zeros",
+   "6 concavity columns zero together in [[P/zero_blocks/0/rows|int]] rows, all benign",
+   "Kept as values: a convex contour \\emph{has} concavity 0, so these are real measurements, not sentinels."
+  ],
+  [
+   "Near-exact redundancy",
+   "\\texttt{mean perimeter} rebuilt from other columns with $R^2$=[[P/linear_redundancy/mean perimeter/formula_r2|4]]",
+   "LR: drop \\texttt{mean perimeter} (perimeter $\\approx 2\\pi r$); RF: keep (A2)."
+  ],
+  [
+   "Correlated size measures",
+   "[[P/high_corr_pairs/0/r|3]] (radius, perimeter) and many more",
+   "Keep; L2 copes. Importances are shared."
+  ]
+ ],
+ "data": "[[P/n_train|int]] training and [[P/n_test|int]] test rows; [[P/minority_share|pct1]] malignant, i.e.\\ \\emph{not} imbalanced by the skill's 35\\% rule, so the primary metric switches to ROC-AUC and the threshold objective to balanced accuracy. The profiler raised [[P/n_flags|int]] flags; the new detectors behaved sensibly (the drift detector, which now requires KS $p<0.01$, no longer fires on the 114-row hold-out). %%issues_table%%",
+ "features": "The same family-specific logic as in the main report: transform and de-duplicate for the linear model only, leave the forest alone. The concavity zeros are the instructive contrast with the main dataset: the detector fires on both, but here the decision is the opposite (keep), because the zeros have a physical meaning.",
+ "training": "LR (one-hot is a no-op; standardised) vs.\\ \\textbf{Random Forest instead of gradient boosting}: the house rule for $n<1000$ applies, because early stopping would hold out only $\\sim$45 rows. The forest has no stopping rule (300 trees fixed; more trees do not over-fit), so depth, leaf size and \\texttt{max\\_features} are tuned. [[L/cv/folds|int]]-fold CV (rule for $n<2000$). The selected RF \\texttt{min\\_samples\\_leaf}=1 lies on its range boundary, but 1 is the smallest legal value, so the range cannot be widened (logged). LR converged after [[R/models/lr/fit/n_iter|int]] iterations. %%config_table%%",
+ "evaluation": "%%results_table%% %%figure%% Both models are near the ceiling. The paired comparison finds no difference: McNemar counts [[R/comparison/mcnemar/A_right_B_wrong|int]]/[[R/comparison/mcnemar/A_wrong_B_right|int]] ($p$=[[R/comparison/mcnemar/p_exact|p]]), CV corrected $t$-test $p$=[[R/comparison/cv_corrected_ttest/p|p]]. With [[P/n_test|int]] test rows, one misclassification moves recall by 2.4 points, so the CIs are wide. %%ablation_table%%",
+ "findings": "On a small, clean, numeric dataset the skill correctly chose different rules (ROC-AUC, 10 folds, Random Forest, keep zeros) and concluded \\emph{no detectable difference}, preferring LR for its simplicity. Neither LR preprocessing step (log transform, dropping the redundant perimeter) changed CV ROC-AUC beyond fold noise.",
+ "figure_caption": "Hold-out set. (a) Precision--recall curves with the tuned operating points. (b, c) Confusion matrices at the tuned thresholds."
+}

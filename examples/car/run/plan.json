@@ -1,0 +1,119 @@
+{
+  "seed": 42,
+  "missing_indicators": {
+    "value": false,
+    "why": "No missing values."
+  },
+  "categorical_missing": {
+    "value": "own_level",
+    "why": "No missing values; kept for completeness."
+  },
+  "zero_as_missing": {
+    "columns": [],
+    "why": "No numeric columns."
+  },
+  "rare_level_threshold": {
+    "value": 0.0,
+    "why": "All levels hold >= 25% of rows; nothing to pool."
+  },
+  "drop_columns": {
+    "columns": [],
+    "why": "All six attributes are design inputs of the car evaluation; none redundant."
+  },
+  "class_imbalance_note": {
+    "value": "class_weight searched",
+    "why": "Minority classes good/vgood are 4% each (ratio 18.6:1); macro-F1 weighs them equally and class_weight=balanced is searched."
+  },
+  "cv": {
+    "folds": 10,
+    "primary_metric": "f1_macro",
+    "why": "Multiclass with tiny classes (~52 training rows): macro-F1 gives each class equal weight; 10 folds because n_train = 1382 < 2000 (each fold still has ~5 vgood rows)."
+  },
+  "threshold": {
+    "strategy": "none",
+    "why": "Multiclass: arg-max of probabilities."
+  },
+  "models": [
+    {
+      "id": "lr",
+      "label": "Logistic Regression",
+      "estimator": "LogisticRegression",
+      "encoding": "onehot",
+      "scale": false,
+      "params": {
+        "max_iter": 5000,
+        "tol": 0.0001
+      },
+      "search": {
+        "C": {
+          "loguniform": [
+            0.01,
+            1000
+          ]
+        },
+        "class_weight": [
+          null,
+          "balanced"
+        ]
+      },
+      "n_iter": 20,
+      "why": "Multinomial linear model on one-hot attributes: tests whether acceptability is an additive score of attribute levels. No scaling needed for 0/1 inputs. Stopping: lbfgs tolerance 1e-4."
+    },
+    {
+      "id": "hgb",
+      "label": "Hist. Gradient Boosting",
+      "estimator": "HistGradientBoostingClassifier",
+      "encoding": "native",
+      "scale": false,
+      "params": {
+        "max_iter": 2000,
+        "early_stopping": true,
+        "validation_fraction": 0.1,
+        "n_iter_no_change": 30,
+        "scoring": "loss"
+      },
+      "search": {
+        "learning_rate": {
+          "loguniform": [
+            0.02,
+            0.3
+          ]
+        },
+        "max_leaf_nodes": {
+          "randint": [
+            8,
+            128
+          ]
+        },
+        "min_samples_leaf": {
+          "randint": [
+            2,
+            30
+          ]
+        },
+        "l2_regularization": {
+          "loguniform": [
+            0.0001,
+            10
+          ]
+        },
+        "class_weight": [
+          null,
+          "balanced"
+        ]
+      },
+      "n_iter": 30,
+      "why": "Captures interactions: car acceptability is defined by hierarchical rules (e.g. any car with safety=low or persons=2 is unacceptable), which a tree can represent directly. min_samples_leaf range lowered to [2,30] because the smallest class has ~52 rows. Stopping: early stopping on 10% validation split, patience 30."
+    }
+  ],
+  "ablations": [
+    {
+      "id": "A1_hgb_onehot",
+      "model": "hgb",
+      "model_change": {
+        "encoding": "onehot"
+      },
+      "question": "HGB: one-hot instead of native categorical splits"
+    }
+  ]
+}

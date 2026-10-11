@@ -1,0 +1,148 @@
+{
+  "seed": 42,
+  "positive_class": "malignant",
+  "positive_class_why": "Minority class (37%) and the clinically relevant one.",
+  "missing_indicators": {
+    "value": false,
+    "why": "No missing values in train or test."
+  },
+  "categorical_missing": {
+    "value": "own_level",
+    "why": "No categorical columns; kept for completeness."
+  },
+  "zero_as_missing": {
+    "columns": [],
+    "why": "The 11 rows that are zero in all six concavity columns are all benign: a cell contour with no concave segments genuinely has concavity 0, so zero is a real measurement, not a sentinel (house rule: keep physically meaningful zeros)."
+  },
+  "log_transform": {
+    "columns": [],
+    "why": "Set per model (LR only)."
+  },
+  "rare_level_threshold": {
+    "value": 0.0,
+    "why": "No categorical columns."
+  },
+  "drop_columns": {
+    "columns": [],
+    "why": "Nothing dropped globally."
+  },
+  "high_correlation": {
+    "value": "keep",
+    "why": "Size measures (radius/perimeter/area, mean/worst) are highly correlated (r up to 0.998); L2 regularisation handles it, but coefficients and importances are shared."
+  },
+  "cv": {
+    "folds": 10,
+    "primary_metric": "roc_auc",
+    "why": "455 training rows: 10 folds lower the variance of the CV estimate (house rule n<2000). Minority share 37% is above the 35% imbalance threshold, so ROC-AUC (ranking quality over both classes) is the primary metric."
+  },
+  "threshold": {
+    "strategy": "oof",
+    "objective": "balanced_accuracy",
+    "why": "Near-balanced classes and unknown costs: maximise balanced accuracy on out-of-fold predictions."
+  },
+  "models": [
+    {
+      "id": "lr",
+      "label": "Logistic Regression",
+      "estimator": "LogisticRegression",
+      "encoding": "onehot",
+      "scale": true,
+      "preprocess": {
+        "log_transform": {
+          "columns": [
+            "radius error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "concavity error",
+            "symmetry error",
+            "fractal dimension error"
+          ],
+          "why": "Seven 'error' columns have skew >= 2 and are non-negative; log1p makes their effect on the logit less dominated by a few large cells."
+        },
+        "drop_columns": {
+          "columns": [
+            "mean perimeter"
+          ],
+          "why": "mean perimeter is reconstructable from the other columns with R^2 = 0.9997 (perimeter ~ 2*pi*radius): redundant for a linear model."
+        }
+      },
+      "params": {
+        "max_iter": 5000,
+        "tol": 0.0001
+      },
+      "search": {
+        "C": {
+          "loguniform": [
+            0.001,
+            100
+          ]
+        },
+        "class_weight": [
+          null,
+          "balanced"
+        ]
+      },
+      "n_iter": 20,
+      "why": "Interpretable linear baseline; tests whether a weighted sum of morphology measures separates the classes. Stopping: lbfgs gradient tolerance 1e-4."
+    },
+    {
+      "id": "rf",
+      "label": "Random Forest",
+      "estimator": "RandomForestClassifier",
+      "encoding": "ordinal",
+      "scale": false,
+      "params": {
+        "n_estimators": 300,
+        "n_jobs": 1
+      },
+      "search": {
+        "max_depth": [
+          null,
+          4,
+          8,
+          16
+        ],
+        "min_samples_leaf": {
+          "randint": [
+            1,
+            20
+          ]
+        },
+        "max_features": [
+          "sqrt",
+          0.3,
+          0.6
+        ],
+        "class_weight": [
+          null,
+          "balanced"
+        ]
+      },
+      "n_iter": 20,
+      "why": "Flexible non-linear model. House rule n_train < 1000: Random Forest instead of gradient boosting, because early stopping would hold out ~45 rows. No stopping criterion is needed: 300 trees fixed, more trees average more but do not over-fit; depth and leaf size are tuned instead."
+    }
+  ],
+  "ablations": [
+    {
+      "id": "A1_lr_no_log",
+      "model": "lr",
+      "change": {
+        "log_transform": {
+          "columns": []
+        }
+      },
+      "question": "LR: no log transform of skewed error columns"
+    },
+    {
+      "id": "A2_lr_keep_perimeter",
+      "model": "lr",
+      "change": {
+        "drop_columns": {
+          "columns": []
+        }
+      },
+      "question": "LR: keep the redundant mean perimeter"
+    }
+  ]
+}

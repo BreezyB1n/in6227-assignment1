@@ -1,0 +1,1175 @@
+{
+  "load": {
+    "train_file": "breast_cancer.csv",
+    "test_file": null,
+    "target": "diagnosis",
+    "raw_train_rows": 569,
+    "whitespace_cells_stripped": 0,
+    "test_source": "stratified 20% hold-out (seed 42)",
+    "train_rows_missing_label": 0,
+    "test_rows_missing_label": 0,
+    "train_rows": 455,
+    "test_rows": 114
+  },
+  "task": "binary",
+  "target": "diagnosis",
+  "n_train": 455,
+  "n_test": 114,
+  "n_features": 30,
+  "numeric_columns": [
+    "mean radius",
+    "mean texture",
+    "mean perimeter",
+    "mean area",
+    "mean smoothness",
+    "mean compactness",
+    "mean concavity",
+    "mean concave points",
+    "mean symmetry",
+    "mean fractal dimension",
+    "radius error",
+    "texture error",
+    "perimeter error",
+    "area error",
+    "smoothness error",
+    "compactness error",
+    "concavity error",
+    "concave points error",
+    "symmetry error",
+    "fractal dimension error",
+    "worst radius",
+    "worst texture",
+    "worst perimeter",
+    "worst area",
+    "worst smoothness",
+    "worst compactness",
+    "worst concavity",
+    "worst concave points",
+    "worst symmetry",
+    "worst fractal dimension"
+  ],
+  "categorical_columns": [],
+  "target_train": {
+    "benign": 285,
+    "malignant": 170
+  },
+  "target_test": {
+    "benign": 72,
+    "malignant": 42
+  },
+  "minority_share": 0.3736,
+  "imbalance_ratio": 1.68,
+  "onehot_width_estimate": 30,
+  "numeric": {
+    "mean radius": {
+      "missing_train": 0,
+      "n_unique": 375,
+      "mean": 14.1661,
+      "std": 3.5791,
+      "min": 6.981,
+      "q1": 11.71,
+      "median": 13.34,
+      "q3": 15.935,
+      "max": 28.11,
+      "skew": 0.986,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0242,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.044,
+      "drift_ks_p": 0.9897
+    },
+    "mean texture": {
+      "missing_train": 0,
+      "n_unique": 396,
+      "mean": 19.4177,
+      "std": 4.2907,
+      "min": 9.71,
+      "q1": 16.335,
+      "median": 18.9,
+      "q3": 21.83,
+      "max": 39.28,
+      "skew": 0.647,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.011,
+      "outlier_share_3iqr": 0.0022,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.102,
+      "drift_ks_p": 0.2804
+    },
+    "mean perimeter": {
+      "missing_train": 0,
+      "n_unique": 426,
+      "mean": 92.2159,
+      "std": 24.7171,
+      "min": 43.79,
+      "q1": 75.235,
+      "median": 86.18,
+      "q3": 104.5,
+      "max": 188.5,
+      "skew": 1.037,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0264,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.053,
+      "drift_ks_p": 0.9422
+    },
+    "mean area": {
+      "missing_train": 0,
+      "n_unique": 436,
+      "mean": 659.5782,
+      "std": 360.4187,
+      "min": 143.5,
+      "q1": 420.4,
+      "median": 546.4,
+      "q3": 795.5,
+      "max": 2501.0,
+      "skew": 1.72,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.044,
+      "outlier_share_3iqr": 0.0088,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.049,
+      "drift_ks_p": 0.9724
+    },
+    "mean smoothness": {
+      "missing_train": 0,
+      "n_unique": 399,
+      "mean": 0.096,
+      "std": 0.0143,
+      "min": 0.0625,
+      "q1": 0.0851,
+      "median": 0.0952,
+      "q3": 0.1049,
+      "max": 0.1634,
+      "skew": 0.576,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.011,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.106,
+      "drift_ks_p": 0.2422
+    },
+    "mean compactness": {
+      "missing_train": 0,
+      "n_unique": 438,
+      "mean": 0.1038,
+      "std": 0.0539,
+      "min": 0.0194,
+      "q1": 0.0637,
+      "median": 0.0923,
+      "q3": 0.1303,
+      "max": 0.3454,
+      "skew": 1.271,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0308,
+      "outlier_share_3iqr": 0.0022,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.076,
+      "drift_ks_p": 0.6338
+    },
+    "mean concavity": {
+      "missing_train": 0,
+      "n_unique": 431,
+      "mean": 0.0892,
+      "std": 0.0817,
+      "min": 0.0,
+      "q1": 0.0295,
+      "median": 0.0594,
+      "q3": 0.1322,
+      "max": 0.4268,
+      "skew": 1.46,
+      "zeros": 11,
+      "zero_share": 0.0242,
+      "outlier_share_1.5iqr": 0.0374,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "zero_isolated": false,
+      "min_nonzero": 0.0007,
+      "missing_test": 0,
+      "drift_ks": 0.067,
+      "drift_ks_p": 0.7792
+    },
+    "mean concave points": {
+      "missing_train": 0,
+      "n_unique": 434,
+      "mean": 0.049,
+      "std": 0.0397,
+      "min": 0.0,
+      "q1": 0.0197,
+      "median": 0.0333,
+      "q3": 0.0741,
+      "max": 0.2012,
+      "skew": 1.204,
+      "zeros": 11,
+      "zero_share": 0.0242,
+      "outlier_share_1.5iqr": 0.0198,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "zero_isolated": false,
+      "min_nonzero": 0.0019,
+      "missing_test": 0,
+      "drift_ks": 0.053,
+      "drift_ks_p": 0.9438
+    },
+    "mean symmetry": {
+      "missing_train": 0,
+      "n_unique": 360,
+      "mean": 0.1815,
+      "std": 0.0276,
+      "min": 0.106,
+      "q1": 0.162,
+      "median": 0.1799,
+      "q3": 0.1954,
+      "max": 0.304,
+      "skew": 0.738,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0286,
+      "outlier_share_3iqr": 0.0022,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.078,
+      "drift_ks_p": 0.5964
+    },
+    "mean fractal dimension": {
+      "missing_train": 0,
+      "n_unique": 413,
+      "mean": 0.0627,
+      "std": 0.007,
+      "min": 0.0502,
+      "q1": 0.0576,
+      "median": 0.0613,
+      "q3": 0.0664,
+      "max": 0.0974,
+      "skew": 1.259,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0264,
+      "outlier_share_3iqr": 0.0066,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.086,
+      "drift_ks_p": 0.4787
+    },
+    "radius error": {
+      "missing_train": 0,
+      "n_unique": 434,
+      "mean": 0.4112,
+      "std": 0.2902,
+      "min": 0.1115,
+      "q1": 0.2337,
+      "median": 0.3274,
+      "q3": 0.485,
+      "max": 2.873,
+      "skew": 3.181,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0681,
+      "outlier_share_3iqr": 0.0132,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.095,
+      "drift_ks_p": 0.3534
+    },
+    "texture error": {
+      "missing_train": 0,
+      "n_unique": 423,
+      "mean": 1.2179,
+      "std": 0.5523,
+      "min": 0.3602,
+      "q1": 0.8418,
+      "median": 1.139,
+      "q3": 1.4755,
+      "max": 4.885,
+      "skew": 1.809,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.033,
+      "outlier_share_3iqr": 0.0088,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.056,
+      "drift_ks_p": 0.9137
+    },
+    "perimeter error": {
+      "missing_train": 0,
+      "n_unique": 430,
+      "mean": 2.9116,
+      "std": 2.1231,
+      "min": 0.757,
+      "q1": 1.613,
+      "median": 2.31,
+      "q3": 3.3835,
+      "max": 21.98,
+      "skew": 3.517,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0747,
+      "outlier_share_3iqr": 0.0198,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.065,
+      "drift_ks_p": 0.8099
+    },
+    "area error": {
+      "missing_train": 0,
+      "n_unique": 431,
+      "mean": 41.2791,
+      "std": 48.3842,
+      "min": 6.802,
+      "q1": 17.855,
+      "median": 24.87,
+      "q3": 45.39,
+      "max": 542.2,
+      "skew": 5.497,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.1165,
+      "outlier_share_3iqr": 0.044,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.071,
+      "drift_ks_p": 0.7101
+    },
+    "smoothness error": {
+      "missing_train": 0,
+      "n_unique": 443,
+      "mean": 0.0069,
+      "std": 0.0029,
+      "min": 0.0017,
+      "q1": 0.0051,
+      "median": 0.0063,
+      "q3": 0.008,
+      "max": 0.0311,
+      "skew": 2.459,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.044,
+      "outlier_share_3iqr": 0.0044,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.126,
+      "drift_ks_p": 0.0982
+    },
+    "compactness error": {
+      "missing_train": 0,
+      "n_unique": 435,
+      "mean": 0.0253,
+      "std": 0.0176,
+      "min": 0.0023,
+      "q1": 0.013,
+      "median": 0.0202,
+      "q3": 0.032,
+      "max": 0.1064,
+      "skew": 1.739,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0527,
+      "outlier_share_3iqr": 0.0088,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.054,
+      "drift_ks_p": 0.9335
+    },
+    "concavity error": {
+      "missing_train": 0,
+      "n_unique": 427,
+      "mean": 0.032,
+      "std": 0.0317,
+      "min": 0.0,
+      "q1": 0.015,
+      "median": 0.0259,
+      "q3": 0.0405,
+      "max": 0.396,
+      "skew": 5.391,
+      "zeros": 11,
+      "zero_share": 0.0242,
+      "outlier_share_1.5iqr": 0.0527,
+      "outlier_share_3iqr": 0.0154,
+      "integer_valued": false,
+      "zero_isolated": false,
+      "min_nonzero": 0.0007,
+      "missing_test": 0,
+      "drift_ks": 0.072,
+      "drift_ks_p": 0.7005
+    },
+    "concave points error": {
+      "missing_train": 0,
+      "n_unique": 414,
+      "mean": 0.0117,
+      "std": 0.0063,
+      "min": 0.0,
+      "q1": 0.0076,
+      "median": 0.0109,
+      "q3": 0.0145,
+      "max": 0.0528,
+      "skew": 1.617,
+      "zeros": 11,
+      "zero_share": 0.0242,
+      "outlier_share_1.5iqr": 0.0374,
+      "outlier_share_3iqr": 0.0066,
+      "integer_valued": false,
+      "zero_isolated": false,
+      "min_nonzero": 0.0019,
+      "missing_test": 0,
+      "drift_ks": 0.111,
+      "drift_ks_p": 0.1871
+    },
+    "symmetry error": {
+      "missing_train": 0,
+      "n_unique": 405,
+      "mean": 0.0204,
+      "std": 0.0083,
+      "min": 0.0079,
+      "q1": 0.015,
+      "median": 0.0187,
+      "q3": 0.023,
+      "max": 0.079,
+      "skew": 2.245,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0484,
+      "outlier_share_3iqr": 0.0176,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.079,
+      "drift_ks_p": 0.5859
+    },
+    "fractal dimension error": {
+      "missing_train": 0,
+      "n_unique": 441,
+      "mean": 0.0038,
+      "std": 0.0026,
+      "min": 0.0009,
+      "q1": 0.0022,
+      "median": 0.0031,
+      "q3": 0.0045,
+      "max": 0.0298,
+      "skew": 4.085,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0505,
+      "outlier_share_3iqr": 0.0198,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.051,
+      "drift_ks_p": 0.9575
+    },
+    "worst radius": {
+      "missing_train": 0,
+      "n_unique": 373,
+      "mean": 16.3515,
+      "std": 4.901,
+      "min": 7.93,
+      "q1": 13.02,
+      "median": 14.92,
+      "q3": 19.185,
+      "max": 36.04,
+      "skew": 1.116,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.022,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.064,
+      "drift_ks_p": 0.8191
+    },
+    "worst texture": {
+      "missing_train": 0,
+      "n_unique": 419,
+      "mean": 25.9049,
+      "std": 6.0795,
+      "min": 12.02,
+      "q1": 21.49,
+      "median": 25.48,
+      "q3": 30.2,
+      "max": 49.54,
+      "skew": 0.491,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0066,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.127,
+      "drift_ks_p": 0.0941
+    },
+    "worst perimeter": {
+      "missing_train": 0,
+      "n_unique": 424,
+      "mean": 107.8605,
+      "std": 34.176,
+      "min": 50.41,
+      "q1": 84.135,
+      "median": 97.65,
+      "q3": 127.0,
+      "max": 251.2,
+      "skew": 1.141,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0264,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.075,
+      "drift_ks_p": 0.647
+    },
+    "worst area": {
+      "missing_train": 0,
+      "n_unique": 442,
+      "mean": 890.5692,
+      "std": 582.3462,
+      "min": 185.2,
+      "q1": 516.15,
+      "median": 683.4,
+      "q3": 1122.5,
+      "max": 4254.0,
+      "skew": 1.903,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0462,
+      "outlier_share_3iqr": 0.0132,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.066,
+      "drift_ks_p": 0.788
+    },
+    "worst smoothness": {
+      "missing_train": 0,
+      "n_unique": 349,
+      "mean": 0.1321,
+      "std": 0.0235,
+      "min": 0.0712,
+      "q1": 0.1145,
+      "median": 0.1311,
+      "q3": 0.1466,
+      "max": 0.2226,
+      "skew": 0.42,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0066,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.103,
+      "drift_ks_p": 0.264
+    },
+    "worst compactness": {
+      "missing_train": 0,
+      "n_unique": 430,
+      "mean": 0.2555,
+      "std": 0.1584,
+      "min": 0.0273,
+      "q1": 0.1477,
+      "median": 0.2167,
+      "q3": 0.3381,
+      "max": 1.058,
+      "skew": 1.469,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.033,
+      "outlier_share_3iqr": 0.0044,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.074,
+      "drift_ks_p": 0.6741
+    },
+    "worst concavity": {
+      "missing_train": 0,
+      "n_unique": 431,
+      "mean": 0.2752,
+      "std": 0.2121,
+      "min": 0.0,
+      "q1": 0.1193,
+      "median": 0.2298,
+      "q3": 0.3857,
+      "max": 1.252,
+      "skew": 1.198,
+      "zeros": 11,
+      "zero_share": 0.0242,
+      "outlier_share_1.5iqr": 0.0242,
+      "outlier_share_3iqr": 0.0022,
+      "integer_valued": false,
+      "zero_isolated": false,
+      "min_nonzero": 0.0018,
+      "missing_test": 0,
+      "drift_ks": 0.067,
+      "drift_ks_p": 0.7855
+    },
+    "worst concave points": {
+      "missing_train": 0,
+      "n_unique": 404,
+      "mean": 0.1155,
+      "std": 0.0668,
+      "min": 0.0,
+      "q1": 0.0641,
+      "median": 0.101,
+      "q3": 0.1621,
+      "max": 0.291,
+      "skew": 0.495,
+      "zeros": 11,
+      "zero_share": 0.0242,
+      "outlier_share_1.5iqr": 0.0,
+      "outlier_share_3iqr": 0.0,
+      "integer_valued": false,
+      "zero_isolated": false,
+      "min_nonzero": 0.0088,
+      "missing_test": 0,
+      "drift_ks": 0.056,
+      "drift_ks_p": 0.9218
+    },
+    "worst symmetry": {
+      "missing_train": 0,
+      "n_unique": 411,
+      "mean": 0.2914,
+      "std": 0.063,
+      "min": 0.1565,
+      "q1": 0.2512,
+      "median": 0.2823,
+      "q3": 0.3187,
+      "max": 0.6638,
+      "skew": 1.503,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.044,
+      "outlier_share_3iqr": 0.0088,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.079,
+      "drift_ks_p": 0.591
+    },
+    "worst fractal dimension": {
+      "missing_train": 0,
+      "n_unique": 433,
+      "mean": 0.0841,
+      "std": 0.0182,
+      "min": 0.055,
+      "q1": 0.0714,
+      "median": 0.0801,
+      "q3": 0.0921,
+      "max": 0.2075,
+      "skew": 1.739,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "outlier_share_1.5iqr": 0.0396,
+      "outlier_share_3iqr": 0.0044,
+      "integer_valued": false,
+      "missing_test": 0,
+      "drift_ks": 0.056,
+      "drift_ks_p": 0.9157
+    }
+  },
+  "categorical": {},
+  "missing": {
+    "rows_with_any_missing_train": 0,
+    "rows_with_any_missing_test": 0,
+    "cells_missing_train": 0
+  },
+  "duplicates": {
+    "full_rows": 0,
+    "feature_dups_with_conflicting_label": 0,
+    "test_rows_also_in_train": 0
+  },
+  "high_corr_pairs": [
+    {
+      "a": "mean radius",
+      "b": "mean perimeter",
+      "r": 0.998
+    },
+    {
+      "a": "mean radius",
+      "b": "mean area",
+      "r": 0.987
+    },
+    {
+      "a": "mean radius",
+      "b": "mean concave points",
+      "r": 0.827
+    },
+    {
+      "a": "mean radius",
+      "b": "worst radius",
+      "r": 0.969
+    },
+    {
+      "a": "mean radius",
+      "b": "worst perimeter",
+      "r": 0.964
+    },
+    {
+      "a": "mean radius",
+      "b": "worst area",
+      "r": 0.941
+    },
+    {
+      "a": "mean texture",
+      "b": "worst texture",
+      "r": 0.912
+    },
+    {
+      "a": "mean perimeter",
+      "b": "mean area",
+      "r": 0.986
+    },
+    {
+      "a": "mean perimeter",
+      "b": "mean concave points",
+      "r": 0.855
+    },
+    {
+      "a": "mean perimeter",
+      "b": "worst radius",
+      "r": 0.969
+    },
+    {
+      "a": "mean perimeter",
+      "b": "worst perimeter",
+      "r": 0.97
+    },
+    {
+      "a": "mean perimeter",
+      "b": "worst area",
+      "r": 0.941
+    },
+    {
+      "a": "mean area",
+      "b": "mean concave points",
+      "r": 0.827
+    },
+    {
+      "a": "mean area",
+      "b": "worst radius",
+      "r": 0.961
+    },
+    {
+      "a": "mean area",
+      "b": "worst perimeter",
+      "r": 0.957
+    },
+    {
+      "a": "mean area",
+      "b": "worst area",
+      "r": 0.958
+    },
+    {
+      "a": "mean smoothness",
+      "b": "worst smoothness",
+      "r": 0.824
+    },
+    {
+      "a": "mean compactness",
+      "b": "mean concavity",
+      "r": 0.893
+    },
+    {
+      "a": "mean compactness",
+      "b": "mean concave points",
+      "r": 0.846
+    },
+    {
+      "a": "mean compactness",
+      "b": "worst compactness",
+      "r": 0.867
+    },
+    {
+      "a": "mean compactness",
+      "b": "worst concavity",
+      "r": 0.82
+    },
+    {
+      "a": "mean compactness",
+      "b": "worst concave points",
+      "r": 0.828
+    },
+    {
+      "a": "mean concavity",
+      "b": "mean concave points",
+      "r": 0.921
+    },
+    {
+      "a": "mean concavity",
+      "b": "worst concavity",
+      "r": 0.879
+    },
+    {
+      "a": "mean concavity",
+      "b": "worst concave points",
+      "r": 0.858
+    },
+    {
+      "a": "mean concave points",
+      "b": "worst radius",
+      "r": 0.838
+    },
+    {
+      "a": "mean concave points",
+      "b": "worst perimeter",
+      "r": 0.864
+    },
+    {
+      "a": "mean concave points",
+      "b": "worst area",
+      "r": 0.816
+    },
+    {
+      "a": "mean concave points",
+      "b": "worst concave points",
+      "r": 0.912
+    },
+    {
+      "a": "radius error",
+      "b": "perimeter error",
+      "r": 0.975
+    },
+    {
+      "a": "radius error",
+      "b": "area error",
+      "r": 0.952
+    },
+    {
+      "a": "perimeter error",
+      "b": "area error",
+      "r": 0.939
+    },
+    {
+      "a": "area error",
+      "b": "worst area",
+      "r": 0.803
+    },
+    {
+      "a": "compactness error",
+      "b": "concavity error",
+      "r": 0.811
+    },
+    {
+      "a": "compactness error",
+      "b": "fractal dimension error",
+      "r": 0.805
+    },
+    {
+      "a": "worst radius",
+      "b": "worst perimeter",
+      "r": 0.994
+    },
+    {
+      "a": "worst radius",
+      "b": "worst area",
+      "r": 0.983
+    },
+    {
+      "a": "worst perimeter",
+      "b": "worst area",
+      "r": 0.977
+    },
+    {
+      "a": "worst perimeter",
+      "b": "worst concave points",
+      "r": 0.816
+    },
+    {
+      "a": "worst compactness",
+      "b": "worst concavity",
+      "r": 0.897
+    },
+    {
+      "a": "worst compactness",
+      "b": "worst concave points",
+      "r": 0.805
+    },
+    {
+      "a": "worst compactness",
+      "b": "worst fractal dimension",
+      "r": 0.813
+    },
+    {
+      "a": "worst concavity",
+      "b": "worst concave points",
+      "r": 0.849
+    }
+  ],
+  "linear_redundancy": {
+    "mean radius": {
+      "r2": 0.99975,
+      "formula": "0.1378*mean perimeter + 0.0006848*mean area + -3.294*mean compactness + -1.359*mean concavity + 0.1894*radius error + -0.03899*perimeter error + 1.287*concavity error + 0.1514*worst radius + -0.01056*worst perimeter + -0.000482*worst area + 0.1452*worst compactness",
+      "formula_intercept": 0.52481,
+      "formula_r2": 0.9997183
+    },
+    "mean texture": {
+      "r2": 0.91568
+    },
+    "mean perimeter": {
+      "r2": 0.99976,
+      "formula": "6.511*mean radius + 0.001063*mean area + 26.68*mean compactness + 7.856*mean concavity + -2.055*radius error + 0.2089*perimeter error + 0.005556*area error + -6.59*concavity error + -0.6639*worst radius + 0.09185*worst perimeter + -2.02*worst compactness",
+      "formula_intercept": -2.50088,
+      "formula_r2": 0.9997197
+    },
+    "mean area": {
+      "r2": 0.99713
+    },
+    "mean smoothness": {
+      "r2": 0.89002
+    },
+    "mean compactness": {
+      "r2": 0.98292
+    },
+    "mean concavity": {
+      "r2": 0.98664
+    },
+    "mean concave points": {
+      "r2": 0.98586
+    },
+    "mean symmetry": {
+      "r2": 0.76937
+    },
+    "mean fractal dimension": {
+      "r2": 0.93639
+    },
+    "radius error": {
+      "r2": 0.98764
+    },
+    "texture error": {
+      "r2": 0.75386
+    },
+    "perimeter error": {
+      "r2": 0.98731
+    },
+    "area error": {
+      "r2": 0.9765
+    },
+    "smoothness error": {
+      "r2": 0.73965
+    },
+    "compactness error": {
+      "r2": 0.93539
+    },
+    "concavity error": {
+      "r2": 0.94391
+    },
+    "concave points error": {
+      "r2": 0.91625
+    },
+    "symmetry error": {
+      "r2": 0.81117
+    },
+    "fractal dimension error": {
+      "r2": 0.90733
+    },
+    "worst radius": {
+      "r2": 0.99875
+    },
+    "worst texture": {
+      "r2": 0.94558
+    },
+    "worst perimeter": {
+      "r2": 0.99762
+    },
+    "worst area": {
+      "r2": 0.99693
+    },
+    "worst smoothness": {
+      "r2": 0.91684
+    },
+    "worst compactness": {
+      "r2": 0.97317
+    },
+    "worst concavity": {
+      "r2": 0.9696
+    },
+    "worst concave points": {
+      "r2": 0.97418
+    },
+    "worst symmetry": {
+      "r2": 0.89653
+    },
+    "worst fractal dimension": {
+      "r2": 0.95204
+    }
+  },
+  "zero_blocks": [
+    {
+      "columns": [
+        "mean concavity",
+        "mean concave points",
+        "concavity error",
+        "concave points error",
+        "worst concavity",
+        "worst concave points"
+      ],
+      "rows": 11,
+      "target_dist_in_block": {
+        "benign": 1.0
+      }
+    }
+  ],
+  "single_feature_auc": {
+    "worst perimeter": 0.953,
+    "worst radius": 0.952,
+    "worst area": 0.934,
+    "mean concave points": 0.929,
+    "worst concave points": 0.927,
+    "mean perimeter": 0.911,
+    "mean radius": 0.908,
+    "mean area": 0.908,
+    "mean concavity": 0.899,
+    "worst concavity": 0.873,
+    "area error": 0.864,
+    "perimeter error": 0.856,
+    "radius error": 0.843,
+    "mean compactness": 0.812,
+    "worst compactness": 0.805,
+    "worst texture": 0.768,
+    "concavity error": 0.732,
+    "concave points error": 0.718,
+    "mean texture": 0.711,
+    "worst smoothness": 0.696,
+    "worst symmetry": 0.686,
+    "mean smoothness": 0.676,
+    "mean symmetry": 0.649,
+    "compactness error": 0.644,
+    "worst fractal dimension": 0.636,
+    "fractal dimension error": 0.602,
+    "symmetry error": 0.568,
+    "mean fractal dimension": 0.552,
+    "smoothness error": 0.543,
+    "texture error": 0.538
+  },
+  "flags": [
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "mean area",
+      "evidence": "skew 1.72, 0.88% beyond 3*IQR, max 2501.0"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "mean fractal dimension",
+      "evidence": "skew 1.259, 0.66% beyond 3*IQR, max 0.0974"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "radius error",
+      "evidence": "skew 3.181, 1.32% beyond 3*IQR, max 2.873"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "texture error",
+      "evidence": "skew 1.809, 0.88% beyond 3*IQR, max 4.885"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "perimeter error",
+      "evidence": "skew 3.517, 1.98% beyond 3*IQR, max 21.98"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "area error",
+      "evidence": "skew 5.497, 4.40% beyond 3*IQR, max 542.2"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "smoothness error",
+      "evidence": "skew 2.459, 0.44% beyond 3*IQR, max 0.0311"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "compactness error",
+      "evidence": "skew 1.739, 0.88% beyond 3*IQR, max 0.1064"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "concavity error",
+      "evidence": "skew 5.391, 1.54% beyond 3*IQR, max 0.396"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "concave points error",
+      "evidence": "skew 1.617, 0.66% beyond 3*IQR, max 0.0528"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "symmetry error",
+      "evidence": "skew 2.245, 1.76% beyond 3*IQR, max 0.079"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "fractal dimension error",
+      "evidence": "skew 4.085, 1.98% beyond 3*IQR, max 0.0298"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "worst area",
+      "evidence": "skew 1.903, 1.32% beyond 3*IQR, max 4254.0"
+    },
+    {
+      "kind": "heavy_tail_or_outliers",
+      "column": "worst symmetry",
+      "evidence": "skew 1.503, 0.88% beyond 3*IQR, max 0.6638"
+    },
+    {
+      "kind": "co_occurring_zeros",
+      "column": [
+        "mean concavity",
+        "mean concave points",
+        "concavity error",
+        "concave points error",
+        "worst concavity",
+        "worst concave points"
+      ],
+      "evidence": "11 rows zero in all; target distribution there {'benign': 1.0}"
+    },
+    {
+      "kind": "exact_linear_dependency",
+      "column": "mean radius",
+      "evidence": "mean radius = 0.1378*mean perimeter + 0.0006848*mean area + -3.294*mean compactness + -1.359*mean concavity + 0.1894*radius error + -0.03899*perimeter error + 1.287*concavity error + 0.1514*worst radius + -0.01056*worst perimeter + -0.000482*worst area + 0.1452*worst compactness + 0.52481 (R^2=0.9997183)"
+    },
+    {
+      "kind": "exact_linear_dependency",
+      "column": "mean perimeter",
+      "evidence": "mean perimeter = 6.511*mean radius + 0.001063*mean area + 26.68*mean compactness + 7.856*mean concavity + -2.055*radius error + 0.2089*perimeter error + 0.005556*area error + -6.59*concavity error + -0.6639*worst radius + 0.09185*worst perimeter + -2.02*worst compactness + -2.50088 (R^2=0.9997197)"
+    },
+    {
+      "kind": "high_correlation",
+      "column": [
+        "area error",
+        "compactness error",
+        "concavity error",
+        "fractal dimension error",
+        "mean area",
+        "mean compactness",
+        "mean concave points",
+        "mean concavity",
+        "mean perimeter",
+        "mean radius",
+        "mean smoothness",
+        "mean texture",
+        "perimeter error",
+        "radius error",
+        "worst area",
+        "worst compactness",
+        "worst concave points",
+        "worst concavity",
+        "worst fractal dimension",
+        "worst perimeter",
+        "worst radius",
+        "worst smoothness",
+        "worst texture"
+      ],
+      "evidence": "43 pairs with |r| >= 0.8; strongest: mean radius~mean perimeter r=0.998, worst radius~worst perimeter r=0.994, mean radius~mean area r=0.987, mean perimeter~mean area r=0.986"
+    }
+  ],
+  "n_flags": 18
+}

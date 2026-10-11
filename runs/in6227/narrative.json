@@ -1,0 +1,61 @@
+{
+ "meta": {
+  "title": "Logistic Regression vs.\\ Gradient Boosting on an Anonymised Tabular Dataset",
+  "course_line": "IN6227-Assignment-1",
+  "variant": "Variant-2",
+  "name": "<FULL NAME>",
+  "matric": "<MATRIC NO>",
+  "llm_model": "Claude Opus 5.5 (claude-opus-5-5)",
+  "llm_interface": "Agent harness - Claude Code 2.1.278 (desktop app)",
+  "repo_url": "https://github.com/BreezyB1n/in6227-assignment1"
+ },
+ "abstract": "\\textbf{Summary.} We predict the binary \\texttt{label} (positive class \\texttt{yes}, [[P/minority_share|pct1]] of training rows) from 15 anonymised features and compare an L2-regularised Logistic Regression (LR) with Histogram Gradient Boosting (HGB). HGB ranks positives better (test AP [[R/models/hgb/test/average_precision|3]] vs.\\ [[R/models/lr/test/average_precision|3]], 95\\% CI of the difference [[R/comparison/bootstrap_diff_B_minus_A/average_precision/ci/0|+3]] to [[R/comparison/bootstrap_diff_B_minus_A/average_precision/ci/1|+3]]), but at the tuned operating points the two are statistically tied on F1: the signal is largely additive, and threshold choice matters more than model choice.",
+ "issues_table": [
+  [
+   "Missing labels",
+   "[[P/load/train_rows_missing_label|int]] train / [[P/load/test_rows_missing_label|int]] test rows",
+   "Dropped: a label cannot be imputed without inventing ground truth."
+  ],
+  [
+   "Class imbalance",
+   "[[P/minority_share|pct1]] positive; ratio [[P/imbalance_ratio|2]]:1",
+   "Primary metric AP; \\texttt{class\\_weight} searched; threshold tuned on out-of-fold predictions; no resampling."
+  ],
+  [
+   "Missing feature values",
+   "at most 7 cells per column; [[P/missing/rows_with_any_missing_train|int]] train rows affected",
+   "Numeric: median + missing indicator; categorical: own \\texttt{\\_\\_missing\\_\\_} level. Fitted per CV fold."
+  ],
+  [
+   "Co-occurring zeros",
+   "\\texttt{performance\\_score}=\\texttt{stability\\_index}=0 in [[P/zero_blocks/0/rows|int]] rows (all \\texttt{no}); \\texttt{load\\_ratio}=\\texttt{activity\\_duration}=0 in [[P/zero_blocks/1/rows|int]]",
+   "0 $\\to$ NaN + indicator, on prior grounds (isolates the group in one binary feature, removes a point mass). Ablations A1/A2 show no measurable effect."
+  ],
+  [
+   "Heavy tails",
+   "[[P/numeric/load_ratio/outlier_share_3iqr|pct1]] (\\texttt{load\\_ratio}) and [[P/numeric/activity_duration/outlier_share_3iqr|pct1]] (\\texttt{activity\\_duration}) beyond 3\\,IQR",
+   "Rows kept (test has the same extremes). LR only: winsorise at fold-learned [[L/models/0/preprocess/clip_quantiles/q/0|pct1]]/[[L/models/0/preprocess/clip_quantiles/q/1|pct1]] quantiles (A3)."
+  ],
+  [
+   "Exact derived feature",
+   "\\texttt{composite\\_rank} = [[P/linear_redundancy/composite_rank/formula|raw]] ($R^2$=[[P/linear_redundancy/composite_rank/formula_r2|7]])",
+   "LR: drop (perfectly collinear, non-identifiable). HGB: keep (trees cannot form linear combinations) (A4, A5)."
+  ],
+  [
+   "Rare / placeholder levels",
+   "[[P/categorical/region/rare_levels|int]] \\texttt{region} levels $<$1\\% ([[P/categorical/region/rare_share_total|pct1]] of rows); \\texttt{species}=Unknown has [[P/categorical/species/positive_rate_by_level/Unknown|pct1]] positives",
+   "Pool levels below [[L/rare_level_threshold/value|pct0]] (too few rows for a stable one-hot coefficient); keep Other/Unknown as levels because their positive rates differ from the base rate."
+  ],
+  [
+   "Correlated numerics",
+   "$r$=[[P/high_corr_pairs/0/r|2]] (\\texttt{performance\\_score}, \\texttt{stability\\_index})",
+   "Keep; regularisation copes. Caveat: coefficients and importances are shared."
+  ]
+ ],
+ "data": "The training file has [[P/load/raw_train_rows|int]] rows and the test file [[P/load/raw_test_rows|int]]; each has 15 features (7 numeric, 8 categorical) with obfuscated names, so every decision rests on statistics rather than domain knowledge. The profiler (column statistics, single-feature AUCs, linear-redundancy, zero-block and drift detectors) raised [[P/n_flags|int]] flags (Table~\\ref{tab:issues}). Train and test distributions match (all KS statistics $\\le$ 0.009, no unseen levels), so the provided split is used unchanged. Two findings shaped the plan. First, \\texttt{composite\\_rank} is an exact weighted sum of two other columns. Second, zeros occur in blocks: the [[P/zero_blocks/0/rows|int]]-row block is entirely negative, which looks structural (e.g.\\ ``nothing recorded''). No single feature exceeds AUC [[P/single_feature_auc/instrument|3]], so there is no sign of label leakage, but this block could encode post-outcome information. Outliers were never deleted: the test set has the same extremes, so removing them would make CV optimistic.\n%%issues_table%%",
+ "features": "No column is dropped globally; decisions differ by model because their inductive biases differ. \\emph{LR} drops \\texttt{composite\\_rank} (it adds no information to a linear model and makes the coefficients non-identifiable), winsorises the three heavy-tailed columns, one-hot encodes categoricals after pooling levels below [[L/rare_level_threshold/value|pct0]] into one \\emph{infrequent} level, and standardises ([[R/models/lr/n_features_after_preprocessing|int]] inputs incl.\\ indicators). \\emph{HGB} keeps \\texttt{composite\\_rank}, because axis-aligned splits cannot synthesise a linear combination; it needs no scaling or clipping (splits depend only on ranks) and uses native categorical splits on the same pooled levels ([[R/models/hgb/n_features_after_preprocessing|int]] inputs). Both models get the zero$\\to$NaN + indicator treatment and an own level for missing categories. Deliberately \\emph{not} done: target encoding (at most 21 levels; pooling suffices), SMOTE (class weighting and threshold tuning handle imbalance without synthetic points), and importance-based feature selection (it would reuse the data that evaluate it).",
+ "training": "\\textbf{Why this pair.} The comparison asks whether the label is explained by additive effects (LR) or needs interactions and non-linear thresholds (HGB). Rejected alternatives: an RBF-SVM (no native probabilities, $O(n^2)$ training at 31k rows), $k$-NN (distances over [[R/models/lr/n_features_after_preprocessing|int]] mixed one-hot dimensions are poorly scaled), a single tree (dominated by boosting).\n\\textbf{Protocol.} Stratified [[L/cv/folds|int]]-fold CV on the training set only; randomised search with [[R/models/lr/n_candidates|int]] (LR) and [[R/models/hgb/n_candidates|int]] (HGB) candidates, refit on average precision (threshold-free and focused on the minority class, unlike accuracy, which the 76\\% majority baseline already scores well on), with \\texttt{class\\_weight}$\\in\\{$none, balanced$\\}$ searched for both (none won). \\textbf{Stopping criteria:} LR runs L-BFGS to gradient tolerance $10^{-4}$ (converged after [[R/models/lr/fit/n_iter|int]] of [[R/models/lr/fit/max_iter|int]] iterations); HGB stops when validation log-loss on an internal 10\\% split fails to improve for 30 rounds ([[R/models/hgb/fit/n_iter|int]] of [[R/models/hgb/fit/max_iter|int]] rounds). \\textbf{Threshold:} the probability cut-off that maximises positive-class F1 on out-of-fold training predictions ([[R/models/lr/oof/threshold|2]] for LR, [[R/models/hgb/oof/threshold|2]] for HGB); the test set is never used for any choice. No selected value lies on a search-range boundary, and the CV train--validation AP gap is small (LR [[R/models/lr/overfit_gap_primary|3]], HGB [[R/models/hgb/overfit_gap_primary|3]]), so over-fitting is limited (larger for HGB, as expected from its capacity).\n%%config_table%%",
+ "evaluation": "%%results_table%%\n%%figure%%\nBoth models far exceed the prior (AP [[R/baseline/test/average_precision|3]]). HGB is ahead on the threshold-free metrics: the test AP difference is [[R/comparison/bootstrap_diff_B_minus_A/average_precision/mean|+3]] (bootstrap $p$=[[R/comparison/bootstrap_diff_B_minus_A/average_precision/p_two_sided|p]]), consistent with CV ([[R/comparison/cv_corrected_ttest/mean_diff|+3]], corrected $t$-test $p$=[[R/comparison/cv_corrected_ttest/p|p]]). At the tuned thresholds the classifiers disagree on [[R/comparison/mcnemar/A_right_B_wrong|int]]\\,+\\,[[R/comparison/mcnemar/A_wrong_B_right|int]] test rows and HGB is right on [[R/comparison/mcnemar/A_wrong_B_right|int]] of them (McNemar $p$ [[R/comparison/mcnemar/p_exact|p]]), yet positive-class F1 (CI [[R/comparison/bootstrap_diff_B_minus_A/f1/ci/0|+3]] to [[R/comparison/bootstrap_diff_B_minus_A/f1/ci/1|+3]]) and balanced accuracy (CI [[R/comparison/bootstrap_diff_B_minus_A/balanced_accuracy/ci/0|+3]] to [[R/comparison/bootstrap_diff_B_minus_A/balanced_accuracy/ci/1|+3]]) are statistically tied: HGB's edge lies in ranking, not at the chosen operating point, and is practically small (about one AP point). Threshold tuning matters more than the model: moving LR from 0.5 to [[R/models/lr/oof/threshold|2]] raises test F1 from [[R/models/lr/test/at_0.5/f1|3]] to [[R/models/lr/test/at_tuned/f1|3]] by trading precision ([[R/models/lr/test/at_0.5/precision|3]]$\\to$[[R/models/lr/test/at_tuned/precision|3]]) for recall ([[R/models/lr/test/at_0.5/recall|3]]$\\to$[[R/models/lr/test/at_tuned/recall|3]]); at the tuned thresholds LR misses [[R/models/lr/test/at_tuned/confusion/1/0|int]] and HGB [[R/models/hgb/test/at_tuned/confusion/1/0|int]] of [[P/target_test/yes|int]] test positives (Fig.~\\ref{fig:results}), at the cost of more false alarms.\n%%ablation_table%%",
+ "findings": "\\textbf{(1) The signal appears largely additive.} A linear model on one-hot features comes within about one AP point of boosting, so interactions and non-linear thresholds add little here (with the caveat that the two pipelines also differ in preprocessing). \\textbf{(2) Few preprocessing decisions mattered.} Reverting native categorical splits to one-hot changed HGB AP by [[R/ablations/5/delta|+4]] (A6, $p$=[[R/ablations/5/corrected_ttest/p|p]]); removing LR's winsorising changed AP by [[R/ablations/2/delta|+4]] (A3: beyond fold noise but $p$=[[R/ablations/2/corrected_ttest/p|p]], weak evidence); zero handling (A1, A2) and the \\texttt{composite\\_rank} choice (A4, A5) changed AP by less than the fold-to-fold noise. The plan predicted that HGB would profit from \\texttt{composite\\_rank}; the ablation does not support this, even though permutation importance ranks it second for HGB ([[R/models/hgb/permutation_importance/top/1/mean|3]]). Its information is shared with \\texttt{aptitude\\_score} and \\texttt{performance\\_score}: important is not the same as necessary. \\textbf{(3) The models read the data differently.} LR leans on \\texttt{stability\\_index} (importance [[R/models/lr/permutation_importance/top/0/mean|3]]), whereas HGB spreads importance over categoricals (\\texttt{personal\\_interest}, \\texttt{instrument}); \\texttt{geological\\_era}, \\texttt{load\\_ratio} and \\texttt{index\\_weight} contribute nothing to HGB.\n\\textbf{Limitations.} One train/test split; thresholds chosen on the folds that chose hyper-parameters (mildly optimistic); F1 is arbitrary without error costs; anonymised features rule out a domain check of the zero blocks. \\textbf{Next steps:} LR with spline features, to separate non-linear main effects from interactions, and a cost-based threshold once costs are known. \\textbf{Recommendation:} if transparency matters, LR gives up little; otherwise HGB, tuned to the operating point the application needs.",
+ "figure_caption": "Held-out test set. (a) Precision--recall curves; dots mark the out-of-fold-tuned operating points, the dashed line the prior. (b, c) Confusion matrices at the tuned thresholds (counts and row-normalised rates)."
+}

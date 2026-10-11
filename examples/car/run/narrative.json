@@ -1,0 +1,31 @@
+{
+ "meta": {
+  "course_line": "Generalisation example",
+  "variant": "Variant-2",
+  "name": "<FULL NAME>",
+  "matric": "<MATRIC NO>",
+  "llm_model": "Claude Opus 5.5 (claude-opus-5-5)",
+  "llm_interface": "Agent harness - Claude Code 2.1.278 (desktop app)",
+  "repo_url": "https://github.com/BreezyB1n/in6227-assignment1",
+  "title": "Generalisation example 2: OpenML car evaluation (categorical, 4-class)"
+ },
+ "abstract": "\\textbf{Summary.} Six ordered categorical attributes, four imbalanced classes (smallest [[P/minority_share|pct1]]), no numeric columns, no test file. Here the comparison is decisive: HGB beats LR by [[R/comparison/bootstrap_diff_B_minus_A/f1_macro/mean|+3]] macro-F1 (95\\% CI [[R/comparison/bootstrap_diff_B_minus_A/f1_macro/ci/0|+3]] to [[R/comparison/bootstrap_diff_B_minus_A/f1_macro/ci/1|+3]]), because the target is defined by interacting rules that an additive model cannot express.",
+ "issues_table": [
+  [
+   "Severe class imbalance",
+   "{[[P/target_train/unacc|int]], [[P/target_train/acc|int]], [[P/target_train/good|int]], [[P/target_train/vgood|int]]} training rows; ratio [[P/imbalance_ratio|1]]:1",
+   "Primary metric macro-F1; \\texttt{class\\_weight} searched; stratified folds."
+  ],
+  [
+   "Only categorical inputs",
+   "[[P/onehot_width_estimate|int]] one-hot columns, all levels $\\ge$ 25\\%",
+   "LR: one-hot without scaling; HGB: native categorical splits; no pooling needed."
+  ]
+ ],
+ "data": "[[P/n_train|int]] training / [[P/n_test|int]] hold-out rows, no missing values or duplicates; the profiler raised only [[P/n_flags|int]] flag. %%issues_table%%",
+ "features": "Nothing to engineer: every attribute is a design input. The levels are ordered (low $<$ med $<$ high $<$ vhigh), and a numeric encoding could help a linear model; the skill keeps them nominal because the order of \\texttt{doors}=`5more' and \\texttt{persons}=`more' is not numeric. This choice is worth challenging, and the next ablation to add.",
+ "training": "LR (multinomial, one-hot) vs.\\ HGB with native categorical splits; [[L/cv/folds|int]]-fold CV because $n<2000$; macro-F1 for refit. HGB's \\texttt{max\\_leaf\\_nodes} first landed on its upper boundary (64), so the range was widened once to 128 per the skill's rule; the re-run selected [[R/models/hgb/best_params/max_leaf_nodes|int]]. Stopping: LR converged in [[R/models/lr/fit/n_iter|int]] iterations; HGB early-stopped after [[R/models/hgb/fit/n_iter|int]] rounds. %%config_table%%",
+ "evaluation": "%%results_table%% %%figure%% HGB classifies the whole hold-out correctly. LR's errors concentrate where interactions matter: [[R/models/lr/test/confusion/2/0|int]] \\emph{unacc} cars predicted \\emph{acc}. McNemar: [[R/comparison/mcnemar/A_wrong_B_right|int]] rows only HGB gets right, [[R/comparison/mcnemar/A_right_B_wrong|int]] the reverse ($p$ [[R/comparison/mcnemar/p_exact|p]]). Native vs.\\ one-hot encoding for HGB makes no detectable difference here (Table~\\ref{tab:ablation}). %%ablation_table%%",
+ "findings": "Where the main report found a largely additive signal, this dataset is the opposite case, and the same two-model design exposes it: a perfect tree ensemble against a linear model at macro-F1 [[R/models/lr/test/f1_macro|3]]. The perfect hold-out score should not be over-read: the dataset is a noise-free enumeration of a known rule hierarchy.",
+ "figure_caption": "Hold-out set. (a) Per-class F1. (b, c) Confusion matrices (arg-max predictions)."
+}

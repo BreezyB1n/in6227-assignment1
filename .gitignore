@@ -1,0 +1,11 @@
+# course dataset is not redistributed; extracted copies live here
+data/
+**/_data/
+*.zip
+# LaTeX intermediates
+*.aux
+*.log
+*.out
+report_main.*
+__pycache__/
+.DS_Store

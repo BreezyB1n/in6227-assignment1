@@ -1,0 +1,219 @@
+{
+  "seed": 42,
+  "positive_class": "yes",
+  "positive_class_why": "Minority class (24%) and the class of interest; PR metrics are computed for it.",
+  "missing_label": {
+    "value": "drop",
+    "why": "3 train / 1 test rows have no label; a label cannot be imputed without inventing ground truth, and 4 rows are <0.01% of the data."
+  },
+  "missing_indicators": {
+    "value": true,
+    "why": "Feature missingness is tiny (<=7 cells per column) so median/own-level imputation is safe; the indicator is kept mainly because zero-as-missing (below) routes the structural-zero blocks into it."
+  },
+  "categorical_missing": {
+    "value": "own_level",
+    "why": "Missing categorical cells get their own '__missing__' level instead of the mode, so the model - not the imputer - decides whether missingness matters; with <=7 rows per column this cannot distort the distribution."
+  },
+  "zero_as_missing": {
+    "columns": [
+      "performance_score",
+      "stability_index",
+      "load_ratio",
+      "activity_duration"
+    ],
+    "why": "Zeros come in blocks: performance_score and stability_index are 0 together in 265 rows (all 'no'); load_ratio and activity_duration are 0 together in 38 rows. Exact co-occurring zeros in otherwise continuous measures mark a structurally different group (e.g. 'no activity recorded') rather than the low end of a continuum. Converting them to NaN + missing indicator isolates that group in one binary feature (which keeps the all-'no' signal) and removes the point mass at 0 that would bend a linear fit. Tested for both models (A1, A2)."
+  },
+  "rare_level_threshold": {
+    "value": 0.01,
+    "why": "17 of 21 region levels (4.8% of rows together) and a few era/mineral levels are below 1%; pooling them into one 'infrequent' level avoids one-hot columns estimated from <300 rows and handles unseen test levels gracefully."
+  },
+  "placeholder_levels": {
+    "value": "keep",
+    "why": "'Other'/'Unknown' in region, personal_interest and species have distinct positive rates (e.g. species=Unknown 8.7% vs 24% overall), so they carry information and are kept as ordinary levels rather than recoded to missing."
+  },
+  "log_transform": {
+    "columns": [],
+    "why": "No numeric column has |skew| >= 2; clipping (LR only) is enough for the tails."
+  },
+  "drop_columns": {
+    "columns": [],
+    "why": "Global: nothing dropped; the composite_rank decision is model-specific (see models)."
+  },
+  "cv": {
+    "folds": 5,
+    "primary_metric": "average_precision",
+    "why": "Stratified 5-fold keeps the 24% prevalence in every fold (~6.2k validation rows each, enough for stable AP). Average precision (PR-AUC) is threshold-free and focuses on the minority class, whereas accuracy would reward the 76% majority baseline."
+  },
+  "threshold": {
+    "strategy": "oof",
+    "objective": "f1",
+    "why": "Class costs are unknown, so the operating threshold is chosen to maximise F1 of the positive class on out-of-fold training predictions - never on the test set. Metrics at 0.5 are reported as well."
+  },
+  "models": [
+    {
+      "id": "lr",
+      "label": "Logistic Regression",
+      "estimator": "LogisticRegression",
+      "encoding": "onehot",
+      "scale": true,
+      "preprocess": {
+        "drop_columns": {
+          "columns": [
+            "composite_rank"
+          ],
+          "why": "composite_rank = 0.006*aptitude + 0.004*performance exactly (R^2=0.9999999). For a linear model it adds no information and makes the coefficient vector non-identifiable; dropping it loses nothing because LR can rebuild it."
+        },
+        "clip_quantiles": {
+          "columns": [
+            "load_ratio",
+            "index_weight",
+            "activity_duration"
+          ],
+          "q": [
+            0.005,
+            0.995
+          ],
+          "why": "load_ratio, index_weight and activity_duration have 1.8%, 0.5% and 3.8% of values beyond 3*IQR (maxima 143.7, 99.6, 205 vs medians 23.7, 11.7, 80.3); a linear logit is unbounded in x, so a few extreme points can dominate. Quantiles are learned inside each training fold."
+        }
+      },
+      "params": {
+        "max_iter": 5000,
+        "tol": 0.0001,
+        "solver": "lbfgs"
+      },
+      "search": {
+        "C": {
+          "loguniform": [
+            0.001,
+            100
+          ]
+        },
+        "class_weight": [
+          null,
+          "balanced"
+        ]
+      },
+      "n_iter": 20,
+      "why": "Transparent linear baseline: tells us how much of the signal is additive in the (one-hot) features. Probabilities are calibrated only if class_weight=None wins the search. Stopping: lbfgs until gradient tolerance 1e-4 (max 5000 iterations, convergence checked)."
+    },
+    {
+      "id": "hgb",
+      "label": "Hist. Gradient Boosting",
+      "estimator": "HistGradientBoostingClassifier",
+      "encoding": "native",
+      "scale": false,
+      "preprocess": {
+        "clip_quantiles": {
+          "columns": [],
+          "why": "Trees split on order statistics, so monotone clipping cannot change them."
+        }
+      },
+      "params": {
+        "max_iter": 2000,
+        "early_stopping": true,
+        "validation_fraction": 0.1,
+        "n_iter_no_change": 30,
+        "scoring": "loss"
+      },
+      "search": {
+        "learning_rate": {
+          "loguniform": [
+            0.02,
+            0.3
+          ]
+        },
+        "max_leaf_nodes": {
+          "randint": [
+            8,
+            64
+          ]
+        },
+        "min_samples_leaf": {
+          "randint": [
+            10,
+            600
+          ]
+        },
+        "l2_regularization": {
+          "loguniform": [
+            0.0001,
+            10
+          ]
+        },
+        "class_weight": [
+          null,
+          "balanced"
+        ]
+      },
+      "n_iter": 30,
+      "why": "Captures non-linearities and interactions (e.g. weather x instrument) that LR cannot; native categorical splits avoid a 80-column one-hot; keeps composite_rank because axis-aligned trees cannot synthesise a linear combination themselves. Stopping: early stopping on a 10% internal validation split when log-loss fails to improve for 30 rounds. min_samples_leaf searched up to 600 (~n/50) because with 25k rows per training fold a leaf of a few hundred rows is still a small fraction of the data and acts as the main regulariser."
+    }
+  ],
+  "ablations": [
+    {
+      "id": "A1_lr_keep_zeros",
+      "model": "lr",
+      "change": {
+        "zero_as_missing": {
+          "columns": []
+        }
+      },
+      "question": "LR: keep co-occurring zeros as values (no NaN + indicator)"
+    },
+    {
+      "id": "A2_hgb_keep_zeros",
+      "model": "hgb",
+      "change": {
+        "zero_as_missing": {
+          "columns": []
+        }
+      },
+      "question": "HGB: keep co-occurring zeros as values (no NaN + indicator)"
+    },
+    {
+      "id": "A3_lr_no_clip",
+      "model": "lr",
+      "change": {
+        "clip_quantiles": {
+          "columns": []
+        }
+      },
+      "question": "LR: no winsorising of heavy tails"
+    },
+    {
+      "id": "A4_lr_keep_composite",
+      "model": "lr",
+      "change": {
+        "drop_columns": {
+          "columns": []
+        }
+      },
+      "question": "LR: keep the collinear composite_rank"
+    },
+    {
+      "id": "A5_hgb_drop_composite",
+      "model": "hgb",
+      "change": {
+        "drop_columns": {
+          "columns": [
+            "composite_rank"
+          ]
+        }
+      },
+      "question": "HGB: drop composite_rank"
+    },
+    {
+      "id": "A6_hgb_onehot",
+      "model": "hgb",
+      "model_change": {
+        "encoding": "onehot",
+        "scale": false
+      },
+      "question": "HGB: one-hot instead of native categorical splits"
+    }
+  ],
+  "high_correlation": {
+    "value": "keep",
+    "why": "performance_score/stability_index r=0.89 and both with composite_rank r>=0.83 are below the exact-dependency level; dropping would discard information and L2 regularisation (LR) / greedy splits (HGB) cope with it. Caveat for interpretation: LR coefficients and permutation importances are shared among these correlated columns."
+  }
+}
